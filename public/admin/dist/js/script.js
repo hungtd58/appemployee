@@ -48,7 +48,7 @@ $(function() {
  * Slide up alert
  */
 $(function(){
-    $("div .alert").delay(3000).slideUp();
+    $("div .alert").delay(6000).slideUp();
 });
 
 /**

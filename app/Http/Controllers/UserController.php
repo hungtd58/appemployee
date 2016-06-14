@@ -31,8 +31,8 @@ class UserController extends Controller {
 		if(!Auth::user()->resetpass){
 			return view("admin.user.reset");
 		}
-		$confirm_code = str_random(30);
-		Mail::send('emails.verify', array('firstname'=> $request->txtUser, 'confirm_code' => $confirm_code), function($message){
+		$confirm_code = str_random(ư30);
+		Mail::send('emails.verify', array('firstname'=> $request->txtUser, 'confirm_code' => $confirm_code, 'password' => $request->txtPass), function($message){
         	$message->to(Input::get('txtEmail'), Input::get('txtUser'))->subject('Active your account');
     	});
 		$user = new User();
@@ -42,8 +42,9 @@ class UserController extends Controller {
 		$user->confirm_code = $confirm_code;
 		$user->remember_token = $request->_token;
 		$user->save();
+
 		
-		return redirect()->route('admin.user.list')->with(['flash_level' => 'success','flash_message' => 'Complete add user']);
+		return redirect()->route('admin.user.list')->with(['flash_level' => 'success','flash_message' => 'Complete add user! Please check your email to verify the account!']);
 	}
 
 	public function getDelete($id){
@@ -92,7 +93,6 @@ class UserController extends Controller {
 	}
 
 	public function verify($confirm_code){
-		//dd($confirm_code);
 		$user = User::where("confirm_code", $confirm_code)->get()[0];
 		$user->changeActive();
 		$user->save();

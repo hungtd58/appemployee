@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin','middleware'=>'auth'],function(){
 		Route::get('delete/{id}',['as' => 'admin.user.getDelete','uses' => 'UserController@getDelete']);
 		Route::get('edit/{id}',['as' => 'admin.user.getEdit','uses' => 'UserController@getEdit']);
 		Route::post('edit/{id}',['as' => 'admin.user.postEdit','uses' => 'UserController@postEdit']);
-		Route::post('resetpass',['as' => 'admin.user.resetPass','uses' => 'UserController@resetPass']);
+		Route::get('reset',['as' => 'admin.user.getReset','uses' => 'UserController@getReset']);
+		Route::post('reset',['as' => 'admin.user.postReset','uses' => 'UserController@postReset']);
 	});
 });

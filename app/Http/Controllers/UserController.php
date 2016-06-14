@@ -14,7 +14,7 @@ class UserController extends Controller {
 
 	public function getList(){
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$data = User::select('id','username','password','email')->where('active', 1)->get()->toArray();
 		return view('admin.user.list',compact('data'));
@@ -22,14 +22,14 @@ class UserController extends Controller {
 
 	public function getAdd(){
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		return view('admin.user.add');
 	}
 
 	public function postAdd(UserRequest $request){
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		Mail::send('emails.verify', array('firstname'=> $request->txtUser), function($message){
         	$message->to(Input::get('txtEmail'), Input::get('txtUser'))->subject('Active your account');
@@ -46,7 +46,7 @@ class UserController extends Controller {
 
 	public function getDelete($id){
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$user = User::find($id);
 		$user->delete($id);
@@ -55,7 +55,7 @@ class UserController extends Controller {
 
 	public function getEdit($id){
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$data = User::find($id)->toArray();
 		return view('admin.user.edit',compact('data'));
@@ -76,6 +76,17 @@ class UserController extends Controller {
 		return redirect()->route('admin.user.list')->with(['flash_level' => 'success','flash_message' => 'Complete add user']);
 	}
 
-	public function resetPass(){
+	public function getReset(){
+		return view('admin.user.reset');
+	}
+
+	public function postReset(Request $request){
+		$this->validate($request,[
+			'txtNewPass'       =>      'required|min:8',
+			'txtRePass'        =>      'required|same:txtNewPass',
+		]);
+		$username = $request->txtUser;
+		$user = User::where('username','=',$username)->get();
+		if($user != '') echo "aloo";
 	}
 }

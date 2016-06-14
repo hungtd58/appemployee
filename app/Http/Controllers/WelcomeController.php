@@ -31,11 +31,6 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		// $u = new User();
-		// $u->username = "root";
-		// $u->email = "root@abc.com";
-		// $u->password = bcrypt('12345678');
-		// $u->save();
 		return view('welcome');
 	}
 

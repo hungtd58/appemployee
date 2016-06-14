@@ -13,7 +13,7 @@ class DepartmentController extends Controller {
 
 	public function getList() {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$data = Department::select('id','name','office_phone','em_id')->orderBy('name','ASC')->get()->toArray();
 		return view('admin.department.list',compact('data'));
@@ -21,7 +21,7 @@ class DepartmentController extends Controller {
 
 	public function getAdd() {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$data = Employee::select('id','name','depart_id')->get()->toArray();
 		return view('admin.department.add',compact('data'));
@@ -29,7 +29,7 @@ class DepartmentController extends Controller {
 
 	public function postAdd(DepartmentRequest $request) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$depart = new Department();
 		$depart->name = $request->txtName;
@@ -41,7 +41,7 @@ class DepartmentController extends Controller {
 
 	public function getDelete($id) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$depart = Department::find($id);
 		$depart->delete($id);
@@ -50,7 +50,7 @@ class DepartmentController extends Controller {
 
 	public function getEdit($id) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$emp = Employee::select('id','name','depart_id')->get()->toArray();
 		$data = Department::find($id)->toArray();
@@ -59,7 +59,7 @@ class DepartmentController extends Controller {
 
 	public function postEdit(Request $request,$id) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$this->validate($request,
 			[
@@ -77,7 +77,7 @@ class DepartmentController extends Controller {
 
 	public function getView($id) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$data = Employee::select('id','name','job_title','email')->where('depart_id','=',$id)->get()->toArray();
 		return view('admin.department.view',compact('data'));

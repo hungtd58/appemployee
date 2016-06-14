@@ -11,7 +11,7 @@ use Input;
 class EmployeeController extends Controller {
 	public function getList() {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$data = Employee::select('id','name','image','job_title','cell_phone','email','depart_id')->get()->toArray();
 		return view('admin.employee.list',compact('data'));
@@ -19,7 +19,7 @@ class EmployeeController extends Controller {
 
 	public function getAdd() {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$depart = Department::select('name','id','em_id')->get()->toArray();
 		return view('admin.employee.add',compact('depart'));
@@ -27,7 +27,7 @@ class EmployeeController extends Controller {
 
 	public function postAdd(EmployeeRequest $request) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$filename = $request->file('fImage')->getClientOriginalName();
 		$employee = new Employee();
@@ -44,7 +44,7 @@ class EmployeeController extends Controller {
 
 	public function getDelete($id) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$emp = Employee::find($id);
 		$emp->delete($id);
@@ -53,7 +53,7 @@ class EmployeeController extends Controller {
 
 	public function getEdit($id) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$depart = Department::select('name','id')->get()->toArray();
 		$data = Employee::find($id);
@@ -62,7 +62,7 @@ class EmployeeController extends Controller {
 
 	public function postEdit(Request $request, $id) {
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$employee = Employee::find($id);
 		$employee->name = $request->txtName;

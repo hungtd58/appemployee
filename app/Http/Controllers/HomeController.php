@@ -33,7 +33,7 @@ class HomeController extends Controller {
 	public function index()
 	{
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		return redirect('admin/department/list');
 	}

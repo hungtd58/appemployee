@@ -31,13 +31,9 @@
                     <h3 class="panel-title">Please Reset Password</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form" action="{!! route('admin.user.getReset') !!}" method="POST">
+                    <form role="form" action="{!! route('admin.user.postReset') !!}" method="POST">
                         <input type="hidden" name="_token" value="{!! csrf_token()  !!}"/>
                         <fieldset>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Username" name="txtUser" type="text" autofocus>
-                                <?php error($errors,'txtUser')?>
-                            </div>
                             <div class="form-group">
                                 <input class="form-control" placeholder="Password" name="txtPass" type="password" value="">
                                 <?php error($errors,'txtPass')?>

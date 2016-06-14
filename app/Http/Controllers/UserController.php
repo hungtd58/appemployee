@@ -31,13 +31,15 @@ class UserController extends Controller {
 		if(!Auth::user()->resetpass){
 			return view("admin.user.reset");
 		}
-		Mail::send('emails.verify', array('firstname'=> $request->txtUser), function($message){
+		$confirm_code = str_random(30);
+		Mail::send('emails.verify', array('firstname'=> $request->txtUser, 'confirm_code' => $confirm_code), function($message){
         	$message->to(Input::get('txtEmail'), Input::get('txtUser'))->subject('Active your account');
     	});
 		$user = new User();
 		$user->username = $request->txtUser;
 		$user->password = Hash::make($request->txtPass);
 		$user->email = $request->txtEmail;
+		$user->confirm_code = $confirm_code;
 		$user->remember_token = $request->_token;
 		$user->save();
 		
@@ -63,7 +65,7 @@ class UserController extends Controller {
 
 	public function postEdit($id,Request $request){
 		if(!Auth::user()->resetpass){
-			return view("admin.reset");
+			return view("admin.user.reset");
 		}
 		$this->validate($request,[
 			'txtPass'       =>      'required|min:8',
@@ -76,17 +78,25 @@ class UserController extends Controller {
 		return redirect()->route('admin.user.list')->with(['flash_level' => 'success','flash_message' => 'Complete add user']);
 	}
 
-	public function getReset(){
-		return view('admin.user.reset');
-	}
-
 	public function postReset(Request $request){
 		$this->validate($request,[
 			'txtNewPass'       =>      'required|min:8',
 			'txtRePass'        =>      'required|same:txtNewPass',
 		]);
-		$username = $request->txtUser;
-		$user = User::where('username','=',$username)->get();
-		if($user != '') echo "aloo";
+		$user = Auth::user();
+
+		$user->changePassword(bcrypt($request->txtNewPass));
+		
+		$user->save();;
+		return redirect('/');
+	}
+
+	public function verify($confirm_code){
+		//dd($confirm_code);
+		$user = User::where("confirm_code", $confirm_code)->get()[0];
+		$user->changeActive();
+		$user->save();
+		Auth::loginUsingId($user->id);
+		return view("admin.user.reset");
 	}
 }

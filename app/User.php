@@ -31,4 +31,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+	public function changePassword($newPass){
+		$this->password = $newPass;
+		$this->resetpass = 1;
+	}
+
+	public function changeActive(){
+		$this->active = 1;
+	}
 }

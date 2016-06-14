@@ -11,6 +11,7 @@
 */
 Route::get('/', 'WelcomeController@index');
 Route::get('home', 'HomeController@index');
+Route::get('verify/{confirm_code}', 'UserController@verify');
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
@@ -40,7 +41,6 @@ Route::group(['prefix' => 'admin','middleware'=>'auth'],function(){
 		Route::get('delete/{id}',['as' => 'admin.user.getDelete','uses' => 'UserController@getDelete']);
 		Route::get('edit/{id}',['as' => 'admin.user.getEdit','uses' => 'UserController@getEdit']);
 		Route::post('edit/{id}',['as' => 'admin.user.postEdit','uses' => 'UserController@postEdit']);
-		Route::get('reset',['as' => 'admin.user.getReset','uses' => 'UserController@getReset']);
 		Route::post('reset',['as' => 'admin.user.postReset','uses' => 'UserController@postReset']);
 	});
 });

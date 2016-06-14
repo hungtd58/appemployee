@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmployeeRequest;
 use Input;
+use Auth;
 
 class EmployeeController extends Controller {
 	public function getList() {

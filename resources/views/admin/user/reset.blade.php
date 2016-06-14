@@ -51,7 +51,7 @@
                                 <?php error($errors,'txtRePass')?>
                             </div>
                             <button type="submit" class="btn btn-lg btn-primary btn-block">Reset</button>
-                            <a href="{!! view('admin.login') !!}">Return Login Page</a>
+                            <a href="{!! url('auth/logout') !!}">Return Login Page</a>
                         </fieldset>
                     </form>
                 </div>

@@ -1,7 +1,7 @@
 @extends('admin.master')
 @section('action','Add Department')
 @section('content')
-    <div class="col-lg-7 panel-body" style="padding-bottom:120px">
+    <div class="col-md-8 col-md-offset-2 panel-body" style="padding-bottom:120px">
     <form action="{!! route('admin.department.getAdd') !!}" method="POST">
         <input type="hidden" name="_token" value="{!! csrf_token() !!}"/>
         <div class="form-group">

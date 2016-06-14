@@ -1,7 +1,7 @@
 @extends('admin.master')
 @section('action','Add User')
 @section('content')
-    <div class="col-lg-7" style="padding-bottom:120px">
+    <div class="col-md-8 col-md-offset-2" style="padding-bottom:120px">
         <form action="{!! route('admin.user.getAdd') !!}" method="POST">
             <input type="hidden" name="_token" value="{!! csrf_token()  !!}"/>
             <div class="form-group">
